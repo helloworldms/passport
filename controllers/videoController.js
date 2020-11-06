@@ -7,7 +7,6 @@ import Video from "../models/Video";
 export const home = async (req, res) => {
   try {
     const videos = await Video.find({});
-    throw Error("errrrrr");
     res.render("home", { pageTitle: "Home", videos });
   } catch (error) {
     console.log(error);
@@ -28,23 +27,41 @@ export const search = (req, res) => {
 export const getUpload = (req, res) =>
   res.render("upload", { pageTitle: "Upload" });
 
-export const postUpload = (req, res) => {
-  const { body, file } = req;
-  console.log(body, file);
-  res.render("upload", { pageTitle: "Upload" });
+export const postUpload = async (req, res) => {
+  const {
+    body: { title, description },
+    file: { path },
+  } = req;
 
-  // 반환을 원하는건 file아님 location. location 내 서버일수도 있고, 아마존 서버일수도 있음
-  // 누군가 videoController에서 Upload하려 할때 무슨 일이 일어나는질 알아야 함
-  ///file upload후 url반환 middleware팔요 - multer-function넣음 url반환
-  // To Do: Upload and save video
-  // upload.pug에서 추가 enctype="multipart/form-data"
+  const newVideo = await Video.create({
+    fileUrl: path,
+    title,
+    description,
+  });
 
-  //res.redirect(routes.videoDetail(324393));
+  console.log(newVideo);
+  res.redirect(routes.videoDetail(newVideo.id));
 };
 
-export const videoDetail = (req, res) =>
-  res.render("videoDetail", { pageTitle: "Video Detail" });
+// 반환을 원하는건 file아님 location. location 내 서버일수도 있고, 아마존 서버일수도 있음
+// 누군가 videoController에서 Upload하려 할때 무슨 일이 일어나는질 알아야 함
+///file upload후 url반환 middleware팔요 - multer-function넣음 url반환
+// To Do: Upload and save video
+// upload.pug에서 추가 enctype="multipart/form-data"
 
+//res.redirect(routes.videoDetail(324393));
+
+export const videoDetail = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  try {
+    const video = await Video.findById(id);
+    res.render("videoDetail", { pageTitle: "Video Detail", video });
+  } catch (error) {
+    res.redirect(routes.home);
+  }
+};
 export const editVideo = (req, res) =>
   res.render("editVideo", { pageTitle: "Edit Video" });
 
