@@ -4,20 +4,28 @@ import {
   getUpload,
   postUpload,
   videoDetail,
-  editVideo,
   deleteVideo,
+  getEditVideo,
+  postEditVideo,
 } from "../controllers/videoController";
 import { uploadVideo } from "../middlewares";
 
 const videoRouter = express.Router();
 
+//get,posst 2type
+
+// Upload
 videoRouter.get(routes.upload, getUpload);
 videoRouter.post(routes.upload, uploadVideo, postUpload);
+
+// Video Detail
 videoRouter.get(routes.videoDetail(), videoDetail);
-videoRouter.get(routes.editVideo, editVideo);
-videoRouter.get(routes.deleteVideo, deleteVideo);
+
+// Edit Video
+videoRouter.get(routes.editVideo(), getEditVideo);
+videoRouter.post(routes.editVideo(), postEditVideo);
+
+// Delete Video
+videoRouter.get(routes.deleteVideo(), deleteVideo);
 
 export default videoRouter;
-
-/// file upload하면 server에 있는 folder(video/)에 upload postUpload라는 funtion은
-/// 해당 file에 접근함. file방식이 아닌 url방식으로. 모든 것이 제대로 되었다면
