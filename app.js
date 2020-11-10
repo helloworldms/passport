@@ -12,6 +12,7 @@ import routes from "./routes";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
+import apiRouter from "./routers/apiRouter";
 
 import "./passport";
 
@@ -31,7 +32,7 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     resave: true,
     saveUninitialized: false,
-    store: new cokieStore({ mongooseConnection: mongoose.connection }),
+    store: new cokieStore({ mongooseConnection: mongoose.connection }), // 쿠키가 보존됨
     ///saveUninitialized는 초기화되지 않은 uninitialized세션을 저장소에 저장합니다.
     ///새로운 새션이지만 변경되지 앟ㅇㄴ 세션은 초기화되지 않습니다.
     /// 로긴 session에 이용하려면,false를 선택하는것이 유용합니다.
@@ -54,5 +55,6 @@ app.use(localsMiddleware);
 app.use(routes.home, globalRouter);
 app.use(routes.users, userRouter);
 app.use(routes.videos, videoRouter);
+app.use(routes.api, apiRouter);
 
 export default app;

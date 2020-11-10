@@ -80,3 +80,27 @@ export const deleteVideo = async (req, res) => {
   } catch (error) {}
   res.redirect(routes.home);
 };
+
+// Register Video View
+
+export const registerView = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  try {
+    const video = await Video.findById(id); //
+    video.views += 1;
+    video.save();
+    res.status(200);
+  } catch (error) {
+    res.status(400); //잘못된 요청
+  } finally {
+    res.end();
+  }
+};
+
+//registerView > find video > if find video > views count 1+ > save
+//it's ok > status 200 =okay or error stauts 400
+//어쨋든 요청을 끝낼거고 여기는 템플릿이 없음 only api view  즉  server와만 통신함
+//visit url만들고 database로 뭔가 함. 간단. 함수이고 렌더링 없음
+//API는 database로 다른 서비스와 통신하기 위해 만들어짐

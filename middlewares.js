@@ -10,18 +10,18 @@ export const localsMiddleware = (req, res, next) => {
   next();
 };
 // passport와 session덕에 req.user를 통해 로그인된 사용자가 누구인지 알 수 있음
-export const onlyPublic = {req, res, next} => {
-  if(req.user) {
+export const onlyPublic = (req, res, next) => {
+  if (req.user) {
     res.redirect(routes.home);
   } else {
-    next()
+    next();
   }
 };
 
 export const onlyPrivate = (req, res, next) => {
-  if (req.user){
+  if (req.user) {
     next(); // 만약 req.user가 존재한다면, 즉 사용자가 로그인 상태라면, next 그렇지 않다면 다시 홈
-  }else{
+  } else {
     res.redirect(routes.home);
   }
 };

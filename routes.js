@@ -25,6 +25,13 @@ const DELETE_VIDEO = "/:id/delete";
 const GITHUB = "/auth/github";
 const GITHUB_COLBACK = "/auth/github/callback";
 
+//API
+
+const API ="/api";
+const REGISTER_VIEW = "/:id/view";
+///유저가 /api/12/view로 가면 view하나씩 올려줌
+///랜더링하지 않음 유저가 가는 곳이 아님
+
 const routes = {
   home: HOME,
   join: JOIN,
@@ -67,6 +74,8 @@ const routes = {
   },
   github: GITHUB,
   githubCallback: GITHUB_COLBACK,
+  api: API,
+  registaerView: REGISTER_VIEW
 };
 
 export default routes;
