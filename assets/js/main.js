@@ -1,0 +1,1 @@
+import "../scss/styel.SCSS";

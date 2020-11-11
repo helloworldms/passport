@@ -10,6 +10,6 @@ import "./models/User";
 const PORT = process.env.PORT || 400;
 
 const handleListening = () =>
+app.listen(PORT, handleListening);
   console.log(`✅ Listening on: http://localhost:${PORT}`);
 
-app.listen(PORT, handleListening);
